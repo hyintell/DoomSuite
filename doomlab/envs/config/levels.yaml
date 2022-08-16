@@ -1,0 +1,21 @@
+DefendTheCenter:
+  Level0:
+    - default
+  Level1:
+    - fast_enemies
+    - flying_enemies
+    - fuzzy_enemies
+    - gore
+    - mossy_bricks
+    - resized_enemies
+    - stone_wall
+  Level2:
+    - gore_mossy_bricks
+    - resized_fuzzy_enemies
+    - stone_wall_flying_enemies
+  Level3:
+    - fast_resized_enemies_gore
+    - gore_stone_wall_fuzzy_enemies
+    - resized_flying_enemies_mossy_bricks
+  Level4:
+    - allinone
