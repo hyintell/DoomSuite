@@ -1,0 +1,42 @@
+CD4:
+    RunAndGun:
+        - default
+        - red
+        - blue
+        - shadows
+CO4:
+    Chainsaw:
+        - default
+    RaiseTheRoof:
+        - default
+    RunAndGun:
+        - default
+    HealthGathering:
+        - default
+CD8:
+    RunAndGun:
+        - obstacles
+        - green
+        - resized
+        - monsters
+        - default
+        - red
+        - blue
+        - shadows
+CO8:
+    Pitfall:
+        - default
+    ArmsDealer:
+        - default
+    HideAndSeek:
+        - default
+    FloorIsLava:
+        - default
+    Chainsaw:
+        - default
+    RaiseTheRoof:
+        - default
+    RunAndGun:
+        - default
+    HealthGathering:
+        - default
