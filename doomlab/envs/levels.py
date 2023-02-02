@@ -1,7 +1,11 @@
 from argparse import Namespace
-from typing import Dict
+from collections import deque
+from typing import Dict, List
+
+import numpy as np
 
 from doomlab.envs.core import DoomEnv
+from doomlab.envs.utils import distance_traversed
 
 
 class DefendTheCenter(DoomEnv):
@@ -14,8 +18,8 @@ class DefendTheCenter(DoomEnv):
     each enemy killed.
     """
 
-    def __init__(self, scenario: str, task = None, map_pathes = None):
-        super().__init__(scenario, task, map_pathes)
+    def __init__(self, scenario: str, task=None, map_paths=None):
+        super().__init__(scenario, task, map_paths)
         self.kill_reward = 1.0
 
     def get_available_actions(self):
@@ -37,10 +41,11 @@ class DefendTheCenter(DoomEnv):
 
         return reward
 
+
 class DefendTheCenterV1(DefendTheCenter):
 
-    def __init__(self, scenario: str, task = None, map_pathes = None):
-        super().__init__(scenario, task, map_pathes)
+    def __init__(self, scenario: str, task=None, map_paths=None):
+        super().__init__(scenario, task, map_paths)
         self.health_loss_penalty = 0.1
         self.ammo_used_penalty = 0.1
 
@@ -60,3 +65,85 @@ class DefendTheCenterV1(DefendTheCenter):
     def get_statistics(self) -> Dict[str, float]:
         variables = self.game_variable_buffer[-1]
         return {'kills': variables[0], 'ammo': variables[2]}
+
+
+class RunAndGun(DoomEnv):
+    """
+    In this scenario, the agent is randomly spawned in one of 20 possible locations within a maze-like environment, and
+    equipped with a weapon and unlimited ammunition. A fixed number of enemies are spawned at random locations at the
+    beginning of an episode. Additional enemies will continually be added at random unoccupied locations after each time
+    interval. The enemies are rendered immobile, forcing them to remain at their fixed locations. The goal of the agent
+    is to locate and shoot the enemies. The agent can move forward, turn left and right, and shoot. The agent is granted
+    a reward for each enemy killed.
+    """
+
+    def __init__(self, scenario: str, task=None, map_paths=None, reward_kill=1.0):
+        super().__init__(scenario, task, map_paths)
+        self.reward_kill = reward_kill
+
+    def get_available_actions(self) -> List[List[float]]:
+        actions = []
+        t_left_right = [[0.0, 0.0], [0.0, 1.0], [1.0, 0.0]]
+        m_forward = [[0.0], [1.0]]
+        shoot = [[0.0], [1.0]]
+        for t in t_left_right:
+            for m in m_forward:
+                for e in shoot:
+                    actions.append(t + m + e)
+        return actions
+
+    def calc_reward(self) -> float:
+        reward = 0.0
+        if len(self.game_variable_buffer) < 2:
+            return reward
+
+        current_vars = self.game_variable_buffer[-1]
+        previous_vars = self.game_variable_buffer[-2]
+
+        if current_vars[1] > previous_vars[1]:
+            reward += self.reward_kill  # Elimination of an enemy
+
+        return reward
+
+
+class RunAndGunV1(RunAndGun):
+
+    def __init__(self, scenario: str, task=None, map_paths=None, reward_kill=1.0, reward_scaler_traversal=0.001):
+        super().__init__(scenario, task, map_paths, reward_kill, reward_scaler_traversal)
+        self.reward_scaler_traversal = reward_scaler_traversal
+        self.distance_buffer = []
+        self.hits_taken = 0
+        self.ammo_used = 0
+
+    def calc_reward(self) -> float:
+        reward = super().calc_reward()
+        # Utilize a dense reward system by encouraging movement
+        distance = distance_traversed(self.game_variable_buffer, 3, 4)
+        self.distance_buffer.append(distance)
+        reward += distance * self.reward_scaler_traversal  # Increase reward linearly
+
+        current_vars = self.game_variable_buffer[-1]
+        previous_vars = self.game_variable_buffer[-2]
+
+        if current_vars[0] < previous_vars[0]:
+            self.hits_taken += 1
+        if current_vars[2] < previous_vars[2]:
+            self.ammo_used += 1
+
+        return reward
+
+    def get_statistics(self) -> Dict[str, float]:
+        if not self.game_variable_buffer:
+            return {}
+        variables = self.game_variable_buffer[-1]
+        return {f'health': variables[0],
+                f'kills': variables[1],
+                f'ammo': self.ammo_used,
+                f'movement': np.mean(self.distance_buffer).round(3),
+                f'hits_taken': self.hits_taken}
+
+    def clear_episode_statistics(self) -> None:
+        super().clear_episode_statistics()
+        self.distance_buffer.clear()
+        self.hits_taken = 0
+        self.ammo_used = 0

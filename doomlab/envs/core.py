@@ -1,7 +1,7 @@
 import os
-from argparse import Namespace
 from collections import deque
 from typing import Dict, Tuple, Any, List
+
 import gym
 import numpy as np
 import vizdoom as vzd
@@ -10,7 +10,8 @@ from vizdoom import ScreenResolution
 
 class DoomEnv(gym.Env):
 
-    def __init__(self, scenario: str, task = None, map_pathes = None, visible = True, variable_queue_len = 5, frame_skip = 4, screen_resolution = ScreenResolution.RES_800X600):
+    def __init__(self, scenario: str, task=None, map_paths=None, visible=True, variable_queue_len=5, frame_skip=4,
+                 screen_resolution=ScreenResolution.RES_800X600):
         super().__init__()
         self.scenario = scenario
         if task == None:
@@ -20,13 +21,13 @@ class DoomEnv(gym.Env):
 
         # Create the Doom game instance
         self.game = vzd.DoomGame()
-        if map_pathes == None:
-            map_pathes = {}
-            map_pathes["cfg"] = os.path.join(os.path.dirname(__file__), f"maps/{self.scenario}/{self.scenario}.cfg")
-            map_pathes["wad"] = os.path.join(os.path.dirname(__file__), f"maps/{self.scenario}/{self.task}.wad")
-        
-        self.cfg_path = map_pathes["cfg"]
-        self.wad_path = map_pathes["wad"]
+        if map_paths == None:
+            map_paths = {}
+            map_paths["cfg"] = os.path.join(os.path.dirname(__file__), f"maps/{self.scenario}/{self.scenario}.cfg")
+            map_paths["wad"] = os.path.join(os.path.dirname(__file__), f"maps/{self.scenario}/{self.task}.wad")
+
+        self.cfg_path = map_paths["cfg"]
+        self.wad_path = map_paths["wad"]
         self.game.load_config(self.cfg_path)
         self.game.set_doom_scenario_path(self.wad_path)
         self.visible = visible
@@ -53,7 +54,6 @@ class DoomEnv(gym.Env):
         self.action_space = gym.spaces.Discrete(self.action_num)
 
         self.extra_statistics = ['kills', 'health', 'ammo', 'movement', 'kits_obtained', 'hits_taken']
-        self.spec = gym.envs.registration.EnvSpec(f'{task}-v0')
         self.count = 0
 
     def reset(self) -> np.ndarray:
