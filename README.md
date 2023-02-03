@@ -4,9 +4,11 @@ DoomLab is a Doom-based suite for deep reinforcement learning.
 
 ## Environments
 
+The environments are developed based on [VizDoom](https://github.com/mwydmuch/ViZDoom). 
+
 ### Generalization on Levels
 
-The environments are developed based on [VizDoom](https://github.com/mwydmuch/ViZDoom). It consists of 4 scenarios and each scenario organises environments according to difficulty levels. The code for running some experiments is in [LevDoom](https://github.com/TTomilin/LevDoom).
+It consists of 4 scenarios and each scenario organises environments according to difficulty levels. The code for running some experiments is in [LevDoom](https://github.com/TTomilin/LevDoom).
 
 Examples:
 
@@ -45,13 +47,27 @@ DefendTheCenter
     - allinone
 ```
 
+### Continual Learning
+
+We provide a sequence of four tasks/environments.
+
+Examples:
+
+<img src="./screenshots/CD4.gif">
+
+RunAndGun
+```
+- default
+- red
+- blue
+- shadows
+```
+
 Todo:
 
 Language
 
 DA
-
-CL
 
 ## Install
 
