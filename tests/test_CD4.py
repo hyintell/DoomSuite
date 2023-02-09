@@ -19,7 +19,7 @@ def run(args: Namespace) -> None:
     tasks = get_tasks_by_sequence(args.sequence)
     for scenario in tasks:
         for env_name in tasks[scenario]:
-            env = create_env(scenario, env_name)
+            env = create_env(scenario, env_name, True)
             args.state_shape = env.observation_space
             args.action_shape = env.action_space.shape or env.action_space.n
             print("Observation space:", env.observation_space.shape)

@@ -10,7 +10,7 @@ from vizdoom import ScreenResolution
 
 class DoomEnv(gym.Env):
 
-    def __init__(self, scenario: str, task=None, map_paths=None, visible=True, variable_queue_len=5, frame_skip=4,
+    def __init__(self, scenario: str, task=None, map_paths=None, visible=False, variable_queue_len=5, frame_skip=4,
                  screen_resolution=ScreenResolution.RES_800X600):
         super().__init__()
         self.scenario = scenario

@@ -18,8 +18,8 @@ class DefendTheCenter(DoomEnv):
     each enemy killed.
     """
 
-    def __init__(self, scenario: str, task=None, map_paths=None):
-        super().__init__(scenario, task, map_paths)
+    def __init__(self, scenario: str, task=None, map_paths=None, visible=False):
+        super().__init__(scenario, task, map_paths, visible)
         self.kill_reward = 1.0
 
     def get_available_actions(self):
@@ -44,8 +44,8 @@ class DefendTheCenter(DoomEnv):
 
 class DefendTheCenterV1(DefendTheCenter):
 
-    def __init__(self, scenario: str, task=None, map_paths=None):
-        super().__init__(scenario, task, map_paths)
+    def __init__(self, scenario: str, task=None, map_paths=None, visible=False):
+        super().__init__(scenario, task, map_paths, visible)
         self.health_loss_penalty = 0.1
         self.ammo_used_penalty = 0.1
 
@@ -77,9 +77,9 @@ class RunAndGun(DoomEnv):
     a reward for each enemy killed.
     """
 
-    def __init__(self, scenario: str, task=None, map_paths=None, reward_kill=1.0):
-        super().__init__(scenario, task, map_paths)
-        self.reward_kill = reward_kill
+    def __init__(self, scenario: str, task=None, map_paths=None, visible=False):
+        super().__init__(scenario, task, map_paths, visible)
+        self.reward_kill = 1.0
 
     def get_available_actions(self) -> List[List[float]]:
         actions = []
