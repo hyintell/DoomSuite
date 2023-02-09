@@ -16,11 +16,11 @@ def get_args():
 
 
 def run(args: Namespace) -> None:
-    envs = get_tasks_by_level("DefendTheCenter", args.level)
     scenario = args.scenario
+    envs = get_tasks_by_level(scenario, args.level)
     for env_n in envs:
         task = env_n
-        env = create_env(scenario, task, "DefendTheCenter")
+        env = create_env(scenario, task, True)
         args.state_shape = env.observation_space
         args.action_shape = env.action_space.shape or env.action_space.n
         print("Observation space:", env.observation_space.shape)
