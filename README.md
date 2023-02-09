@@ -92,6 +92,13 @@ $ pip install -e .
 $ python tests/test_DefendTheCenter_level.py --level 2
 ```
 
+```bash
+$ python tests/test_CD4.py
+```
+
+### [Try it on Google Colab! ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1S1niOZ7cpqNsTpqTnZ-c1fMc8Fe4mlKp?usp=sharing)
+
+
 ## List of publications
 
 - [LevDoom: A Benchmark for Generalization on Level Difficulty in Reinforcement Learning](https://ieee-cog.org/2022/assets/papers/paper_30.pdf) (CoG 2022)
