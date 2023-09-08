@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name="doomlab",
+    name="doomsuite",
     version="1.0",
     author="mf",
     author_email="xx@xx.xx",

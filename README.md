@@ -1,6 +1,6 @@
-# DoomLab
+# DoomSuite
 
-DoomLab is a Doom-based suite for deep reinforcement learning.
+DoomSuite is a Doom-based suite for deep reinforcement learning.
 
 ## Environments
 
@@ -80,9 +80,9 @@ $ python setup.py build && python setup.py install
 ```
 
 
-Then installing DoomLab is simple.
+Then installing DoomSuite is simple.
 ```bash
-$ cd DoomLab
+$ cd DoomSuite
 $ pip install -e .
 ```
 
@@ -114,4 +114,4 @@ $ python tests/test_CD4.py
 
 ## Acknowledgements
 
-The code for DoomLab was originally based on Tristan Tomilin's master thesis project advised by Meng Fang. The authors are also grateful for the open source project [VizDoom](https://github.com/mwydmuch/ViZDoom) and its developers.
+The code for DoomSuite was originally based on Tristan Tomilin's master thesis project advised by Meng Fang. The authors are also grateful for the open source project [VizDoom](https://github.com/mwydmuch/ViZDoom) and its developers.

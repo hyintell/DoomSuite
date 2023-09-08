@@ -4,8 +4,8 @@ from typing import Dict, List
 
 import numpy as np
 
-from doomlab.envs.core import DoomEnv
-from doomlab.envs.utils import distance_traversed
+from doomsuite.envs.core import DoomEnv
+from doomsuite.envs.utils import distance_traversed
 
 
 class DefendTheCenter(DoomEnv):

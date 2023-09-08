@@ -21,7 +21,7 @@ CL_CONFIG = load_conf('cl')
 
 
 def create_env(scenario_name, task_name=None, visible = False):
-    scenario = getattr(importlib.import_module("doomlab.envs.levels"), scenario_name)
+    scenario = getattr(importlib.import_module("doomsuite.envs.levels"), scenario_name)
     map_paths = {}
     map_paths["cfg"] = os.path.join(os.path.dirname(__file__), f"maps/{scenario_name}/{scenario_name}.cfg")
     map_paths["wad"] = os.path.join(os.path.dirname(__file__), f"maps/{scenario_name}/{task_name}.wad")

@@ -1,8 +1,8 @@
 import time
 from argparse import ArgumentParser, Namespace
 
-from doomlab.envs.utils import create_env
-from doomlab.envs.utils import get_tasks_by_level
+from doomsuite.envs.utils import create_env
+from doomsuite.envs.utils import get_tasks_by_level
 
 
 def get_args():
